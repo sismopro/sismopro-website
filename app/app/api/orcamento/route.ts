@@ -97,7 +97,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         { 
           error: 'Dados inválidos',
-          details: error.errors.map(err => ({
+          details: error.issues.map(err => ({
             field: err.path.join('.'),
             message: err.message
           }))
