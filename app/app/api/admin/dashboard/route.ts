@@ -31,6 +31,12 @@ export async function GET(req: NextRequest) {
       }
     })
 
+    type Request = {
+      status: string;
+      createdAt: string;
+      // outras propriedades que seu objeto tiver
+    };
+
     // Calculate stats
     const now = new Date()
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
@@ -38,9 +44,9 @@ export async function GET(req: NextRequest) {
 
     const stats = {
       totalRequests: requests.length,
-      pendingRequests: requests.filter(r => r.status === 'pending').length,
-      thisMonthRequests: requests.filter(r => new Date(r.createdAt) >= startOfMonth).length,
-      thisWeekRequests: requests.filter(r => new Date(r.createdAt) >= startOfWeek).length,
+      pendingRequests: requests.filter((r: Request) => r.status === 'pending').length,
+      thisMonthRequests: requests.filter((r: Request) => new Date(r.createdAt) >= startOfMonth).length,
+      thisWeekRequests: requests.filter((r: Request) => new Date(r.createdAt) >= startOfWeek).length,
     }
 
     return NextResponse.json({
